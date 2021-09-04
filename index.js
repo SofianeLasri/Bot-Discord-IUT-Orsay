@@ -177,11 +177,11 @@ var recursiveAsyncReadLine = function () {
 	switch(command){
 		case "say":
 			if(!args[0] || !args[1])
-				console.log('\n'+"Tu n'as pas mis d'arguments :p"+'\n'+"Usage: say <Numéro du canal> <Texte>");
+				console.log('\n'+'['+'ERREUR'.brightRed+"] Tu n'as pas mis d'arguments :p"+'\n'+'['+'INFO'.yellow+"] Usage: say <Numéro du canal> <\"Texte\">");
 			else {
 				var message = args[1].substring(1, args[1].length-1);
 				client.channels.cache.get(args[0]).send(message);
-				console.log('\n'+"Le message a été envoyé dans le canal n°"+args[0]);
+				console.log('\n'+'['+'SUCCES'.brightGreen+'] Le message a été envoyé dans le canal n°'.+args[0]);
 			}
 			break;
 
