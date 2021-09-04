@@ -66,7 +66,6 @@ const rest = new REST({ version: '9' }).setToken(config.get("DISCORD_BOT_TOKEN")
 		
 		try {
 			console.log('['+'INFO'.yellow+'] Actualisation des commandes...'.brightWhite);
-			var commands = await botCommands.findAll();
 			//console.log(JSON.stringify(commands));
 			await rest.put(
 				Routes.applicationGuildCommands(config.get("CLIENT_ID"), config.get("GUILD_ID")),
