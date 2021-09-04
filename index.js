@@ -209,7 +209,7 @@ const { Client, Intents, MessageActionRow, MessageButton } = require('discord.js
 const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"] });
 
 client.on("ready", async function () {
-	console.log('\n'+("/////////////////////".brightCyan);
+	console.log('\n'+"/////////////////////".brightCyan);
   console.log("// Larbin de l'IUT //".brightCyan);
   console.log("////////////////////".brightCyan);
   console.log("");
