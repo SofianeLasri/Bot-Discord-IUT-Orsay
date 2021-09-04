@@ -210,11 +210,12 @@ const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAG
 
 client.on("ready", async function () {
 	console.log('\n'+("/////////////////////".brightCyan);
-		console.log("// Larbin de l'IUT //".brightCyan);
-		console.log("////////////////////".brightCyan);
-		console.log("");
-		console.log("Bot démarré".brightGreen);
-})
+  console.log("// Larbin de l'IUT //".brightCyan);
+  console.log("////////////////////".brightCyan);
+  console.log("");
+  console.log("Bot démarré".brightGreen);
+});
+
 
 client.on('interactionCreate', async interaction => {
 	if (interaction.isCommand()){
