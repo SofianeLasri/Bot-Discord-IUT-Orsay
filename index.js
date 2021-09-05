@@ -258,7 +258,8 @@ client.on('interactionCreate', async interaction => {
 						if (mm < 10) {
 							mm = '0' + mm;
 						}
-						let birthday = dd + '/' + mm + '/' + yyyy;
+						//let birthday = dd + '/' + mm + '/' + yyyy; Il inverse les jours et les mois
+						let birthday = mm + '/' + dd + '/' + yyyy;
 						let insetMemberBirthday = memberSettings.create({
 							memberId: interaction.user.id,
 							name: "birthday",
@@ -294,12 +295,14 @@ async function checkAnniv() {
 	if (mm < 10) {
 		mm = '0' + mm;
 	}
-	today = dd + '/' + mm + '/' + yyyy;
+	today = dd + '/' + mm;
 
 	let { count, rows } = await memberSettings.findAndCountAll({
 		where: {
 			name: "birthday",
-			value: today
+			value:  {
+				[Op.like]: today.'%'
+			  }
 		},
 		offset: 10,
 		limit: 2
