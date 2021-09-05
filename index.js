@@ -279,5 +279,36 @@ client.on('interactionCreate', async interaction => {
 	}	
 });
 
+// Check anniversaire
+function checkAnniv() {
+	console.log('['+'INFO'.yellow+'] Vérification des anniversaires.'.brightWhite);
+
+	let today = new Date();
+	var dd = memberBirthday.getDate();
+	var mm = memberBirthday.getMonth() + 1;
+
+	var yyyy = memberBirthday.getFullYear();
+	if (dd < 10) {
+		dd = '0' + dd;
+	}
+	if (mm < 10) {
+		mm = '0' + mm;
+	}
+	today = dd + '/' + mm + '/' + yyyy;
+
+	let { count, rows } = await memberSettings.findAndCountAll({
+		where: {
+			name: "birthday",
+			value: today
+		},
+		offset: 10,
+		limit: 2
+	});
+	console.log(count);
+	console.log(rows);
+}
+
+setInterval(checkAnniv, 1500);
+
 // login to Discord with your app's token
 client.login(config.get("DISCORD_BOT_TOKEN"));
