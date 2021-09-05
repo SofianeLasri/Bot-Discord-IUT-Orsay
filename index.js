@@ -20,7 +20,7 @@ const { Routes } = require('discord-api-types/v9');
 const sequelize = new Sequelize(config.get("BDD_NAME"), config.get("BDD_USER"), config.get("BDD_PASSWORD"), {
 	host: config.get("BDD_HOST"),
 	dialect: 'mariadb',
-	logging: true,
+	logging: false,
 });
 
 // Paramètres du bot
