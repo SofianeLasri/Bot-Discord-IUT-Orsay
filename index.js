@@ -259,8 +259,7 @@ client.on('interactionCreate', async interaction => {
 						if (mm < 10) {
 							mm = '0' + mm;
 						}
-						//let birthday = dd + '/' + mm + '/' + yyyy; Il inverse les jours et les mois
-						let birthday = mm + '/' + dd + '/' + yyyy;
+						let birthday = dd + '/' + mm + '/' + yyyy; Il inverse les jours et les mois
 						let insetMemberBirthday = memberSettings.create({
 							memberId: interaction.user.id,
 							name: "birthday",
@@ -310,7 +309,10 @@ async function checkAnniv() {
 	for await (const member of rows){
 		let memberFetch = await client.users.fetch(member.memberId.toString());
 		if(memberFetch){
-			console.log(memberFetch.username);
+			console.log(" 🎂 "+memberFetch.username);
+			if(!memberFetch.roles.cache.has(config.get("883722485131001857"))){
+
+			}
 		}
 		
 	}
