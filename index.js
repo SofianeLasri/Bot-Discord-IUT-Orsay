@@ -311,8 +311,10 @@ async function checkAnniv() {
 	});
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	for await (const member of rows){
-		const memberFetch = await client.users.fetch(member.memberId.toString());
+		const guild = client.guilds.cache.get(config.get("GUILD_ID"));
+		let memberFetch = await client.users.fetch(member.memberId.toString());
 		if(memberFetch){
+			memberFetch = guild.member(memberFetch);
 			console.log(" 🎂 "+memberFetch.username);
 			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
 				let annivRole= await memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
