@@ -304,10 +304,9 @@ async function checkAnniv() {
 			value:  {
 				[Op.like]: today+'%'
 			  }
-		},
-		offset: 10,
-		limit: 2
+		}
 	});
+	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	console.log(count);
 	console.log(rows);
 }
