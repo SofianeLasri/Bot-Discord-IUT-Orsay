@@ -241,15 +241,12 @@ client.on('interactionCreate', async interaction => {
 			});
 			if(userAnniv == null){
 				let memberBirthday = Date.parse(interaction.options.getString('date'));
-				console.log(memberBirthday);
-				/*
-				try{
-					
-				} catch (error) {
-					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
+				if(isNaN(memberBirthday)){
 					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date')+'\n'+error);
+					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
+				}else{
+					await interaction.reply('Je m\'en souviendrai. :wink:');
 				}
-				*/
 			}else{
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
