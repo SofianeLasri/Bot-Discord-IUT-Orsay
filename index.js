@@ -2,6 +2,7 @@
 const config = require('./config');
 // Driver SQL
 const Sequelize = require('sequelize');
+const { Op } = require("sequelize");
 // API externe
 const express = require('express')
 const app = express()
@@ -301,7 +302,7 @@ async function checkAnniv() {
 		where: {
 			name: "birthday",
 			value:  {
-				[Sequelize.like]: today+'%'
+				[Op.like]: today+'%'
 			  }
 		},
 		offset: 10,
