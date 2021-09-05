@@ -308,7 +308,7 @@ async function checkAnniv() {
 	});
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	for await (const member of rows){
-		let user = client.users.cache.fetch(member.memberId.toString());
+		let user = client.users.fetch(member.memberId.toString());
 		console.log(' 🎂 '+user.username);
 	}
 }
