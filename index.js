@@ -286,7 +286,7 @@ client.on('interactionCreate', async interaction => {
 	}	
 });
 
-// Check anniversaire
+// Check anniversaire - WIP
 async function checkAnniv() {
 	console.log('['+'INFO'.yellow+'] Vérification des anniversaires.'.brightWhite);
 
@@ -324,6 +324,8 @@ async function checkAnniv() {
 				if(annivRole){
 					memberFetch.roles.add(annivRole);
 					console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.user.username.brightBlue);
+
+					// JE SUIS ICI, CETTE FONCTION NE FONCTONNE PAS
 				}
 				
 			}
@@ -332,7 +334,7 @@ async function checkAnniv() {
 	}
 }
 
-setInterval(checkAnniv, 1500);
+// setInterval(checkAnniv, 1500);
 
 // login to Discord with your app's token
 client.login(config.get("DISCORD_BOT_TOKEN"));
