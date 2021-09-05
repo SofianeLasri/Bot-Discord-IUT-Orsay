@@ -34,7 +34,7 @@ const botSettings = sequelize.define('bot_settings', {
 // Paramètres des membres
 const memberSettings = sequelize.define('bot_memberSettings', {
 	memberId: { type: Sequelize.BIGINT(255), primaryKey: true },
-  name: { type: Sequelize.STRING(128), primaryKey: true },
+	name: { type: Sequelize.STRING(128), primaryKey: true },
 	value: Sequelize.STRING(512),
 }, {
 	timestamps: false
@@ -92,6 +92,7 @@ async function initialiseDatabaseTables(){
 	console.log('['+'INFO'.yellow+'] Initialisation des tables...'.brightWhite);
 	try{
 		await botSettings.sync();
+		await memberSettings.sync();
 
 		let token = await botSettings.findOne({where: {name: "token" }});
 		if(token == null){
@@ -226,7 +227,12 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.commandName === 'ping') {
 			await interaction.reply('Pong!');
 		}else if(interaction.commandName === 'setanniv'){
-			await interaction.reply('Je suis censé enregistrer ta date d\'anniversaire?');
+			let userAnniv = await memberSettings.findOne({where: {memberId: interaction.user.id name: "birthday"}});
+			if(userAnniv == null){
+				await interaction.reply('Je ne connais pas ta date d\'anniversaire.');
+			}else{
+				await interaction.reply('Je connais ta date d\'anniversaire!');
+			}
 		}else if(interaction.commandName === 'delanniv'){
 			await interaction.reply('Je suis censé supprimer ta date d\'anniversaire?');
 		}
