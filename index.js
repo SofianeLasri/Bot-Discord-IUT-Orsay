@@ -48,8 +48,12 @@ const commands = [{
 	description: 'Répond avec pong!'
 },
 {
-	name: 'anniv',
+	name: 'setanniv',
 	description: 'Permet de définir ta date d\'anniversaire (usage unique).'
+},
+{
+	name: 'delanniv',
+	description: '[Admin] Supprime la date d\'anniversaire d\'un membre.'
 }];
 
 ////////////////////////////////////////////////////////////////
@@ -221,8 +225,10 @@ client.on('interactionCreate', async interaction => {
 		console.log('['+'COMMANDE'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+' a lancé la commande '.brightWhite+interaction.commandName.yellow);
 		if (interaction.commandName === 'ping') {
 			await interaction.reply('Pong!');
-		}else if(interaction.commandName === 'anniv'){
+		}else if(interaction.commandName === 'setanniv'){
 			await interaction.reply('Je suis censé enregistrer ta date d\'anniversaire?');
+		}else if(interaction.commandName === 'delanniv'){
+			await interaction.reply('Je suis censé supprimer ta date d\'anniversaire?');
 		}
 	}	
 });
