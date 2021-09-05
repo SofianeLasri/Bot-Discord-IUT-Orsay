@@ -295,7 +295,7 @@ async function checkAnniv() {
 	if (mm < 10) {
 		mm = '0' + mm;
 	}
-	today = dd + '/' + mm;
+	today = mm + '/' + dd;
 
 	let { count, rows } = await memberSettings.findAndCountAll({
 		where: {
@@ -310,7 +310,7 @@ async function checkAnniv() {
 		let memberFetch = await client.users.fetch(member.memberId.toString());
 		if(memberFetch){
 			console.log(" 🎂 "+memberFetch.username);
-			if(!memberFetch.roles.cache.has(config.get("883722485131001857"))){
+			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
 
 			}
 		}
