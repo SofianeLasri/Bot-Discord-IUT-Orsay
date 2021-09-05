@@ -51,8 +51,6 @@ const commands = [{
 	name: 'setanniv',
 	description: 'Permet de définir ta date d\'anniversaire (usage unique).',
 	options: [{
-		name: "username", // no uppercase as well
-		description: "example option description",
 		type: "STRING"
 	}]
 },
