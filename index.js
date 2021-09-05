@@ -3,9 +3,6 @@ const config = require('./config');
 // Driver SQL
 const Sequelize = require('sequelize');
 const { Op } = require("sequelize");
-// API externe
-const express = require('express')
-const app = express()
 // Couleurs de la console
 var colors = require('colors');
 
@@ -101,14 +98,17 @@ async function initialiseDatabaseTables(){
 		await botSettings.sync();
 		await memberSettings.sync();
 
+		// Basiquement on regarde si l'entrée existe, puis on agit en conséquence
 		let token = await botSettings.findOne({where: {name: "token" }});
 		if(token == null){
+			// INSERT si elle n'existe pas
 			console.log('['+'INSERT'.brightMagenta+'] Insertion de token'.brightWhite);
 			let token = botSettings.create({
 				name: "token",
 				value: config.get("DISCORD_BOT_TOKEN")
 			});
 		}else{
+			// UPDATE si différente
 			if(token.value != config.get("DISCORD_BOT_TOKEN")){
 				token.update({value: config.get("DISCORD_BOT_TOKEN")})
 				.then(updatedRecord => {
@@ -120,6 +120,7 @@ async function initialiseDatabaseTables(){
 			}
 		}
 
+		// Et c'est pareil à chaque fois
 		let clientId = await botSettings.findOne({where: {name: "clientId" }});
 		if(clientId == null){
 			console.log('['+'INSERT'.brightMagenta+'] Insertion de clientId'.brightWhite);
@@ -179,6 +180,7 @@ var rl = readline.createInterface({
   output: process.stdout
 });
 
+// Ce code est a améliorer, je l'ai vulgairement recopié d'un ancien bot (lui même pas très bien conçu)
 var recursiveAsyncReadLine = function () {
   rl.question('Commande: ', function (answer) {
     //if (answer == 'exit')
