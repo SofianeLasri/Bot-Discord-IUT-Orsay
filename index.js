@@ -242,7 +242,7 @@ client.on('interactionCreate', async interaction => {
 			if(userAnniv == null){
 				let memberBirthday = Date.parse(interaction.options.getString('date'));
 				if(isNaN(memberBirthday)){
-					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date')+'\n'+error);
+					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date'));
 					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
 				}else{
 					await interaction.reply('Je m\'en souviendrai. :wink:');
