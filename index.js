@@ -242,7 +242,6 @@ client.on('interactionCreate', async interaction => {
 			if(userAnniv == null){
 				let memberBirthday = Date.parse(interaction.options.getString('date'));
 				console.log(memberBirthday);
-				await interaction.reply(memberBirthday);
 				/*
 				try{
 					
