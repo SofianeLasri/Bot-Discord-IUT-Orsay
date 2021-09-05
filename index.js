@@ -280,7 +280,7 @@ client.on('interactionCreate', async interaction => {
 });
 
 // Check anniversaire
-function checkAnniv() {
+async function checkAnniv() {
 	console.log('['+'INFO'.yellow+'] Vérification des anniversaires.'.brightWhite);
 
 	let today = new Date();
