@@ -51,9 +51,10 @@ const commands = [{
 	name: 'setanniv',
 	description: 'Permet de définir ta date d\'anniversaire (usage unique).',
 	options: [{
-		name: "username", // no uppercase as well
-		description: "example option description",
-		type: 3
+		name: "date", // no uppercase as well
+		description: "Date au format DD/MM/YYYY - 11/12/2001",
+		type: 3,
+		required: true
 	}]
 },
 {
@@ -239,7 +240,7 @@ client.on('interactionCreate', async interaction => {
 				}
 			});
 			if(userAnniv == null){
-				await interaction.reply('Je ne connais pas ta date d\'anniversaire.');
+				await interaction.reply('Tu es né le '+interaction.options.getString('date'));
 			}else{
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
