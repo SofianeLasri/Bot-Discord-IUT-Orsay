@@ -229,7 +229,7 @@ client.on('interactionCreate', async interaction => {
 		}else if(interaction.commandName === 'setanniv'){
 			let userAnniv = await memberSettings.findOne({
 				where: {
-					memberId: interaction.user.id
+					memberId: interaction.user.id,
 					name: 'birthday'
 				}
 			});
