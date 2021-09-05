@@ -307,8 +307,9 @@ async function checkAnniv() {
 		}
 	});
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
-	console.log(count);
-	console.log(rows);
+	for await (const member of rows){
+		console.log(member.memberId);
+	}
 }
 
 setInterval(checkAnniv, 1500);
