@@ -284,10 +284,10 @@ async function checkAnniv() {
 	console.log('['+'INFO'.yellow+'] Vérification des anniversaires.'.brightWhite);
 
 	let today = new Date();
-	var dd = memberBirthday.getDate();
-	var mm = memberBirthday.getMonth() + 1;
+	var dd = today.getDate();
+	var mm = today.getMonth() + 1;
 
-	var yyyy = memberBirthday.getFullYear();
+	var yyyy = today.getFullYear();
 	if (dd < 10) {
 		dd = '0' + dd;
 	}
