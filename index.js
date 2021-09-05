@@ -49,7 +49,12 @@ const commands = [{
 },
 {
 	name: 'setanniv',
-	description: 'Permet de définir ta date d\'anniversaire (usage unique).'
+	description: 'Permet de définir ta date d\'anniversaire (usage unique).',
+	options: [{
+		name: "username", // no uppercase as well
+		description: "example option description",
+		type: "STRING"
+	}]
 },
 {
 	name: 'delanniv',
@@ -236,7 +241,7 @@ client.on('interactionCreate', async interaction => {
 			if(userAnniv == null){
 				await interaction.reply('Je ne connais pas ta date d\'anniversaire.');
 			}else{
-				await interaction.reply('Je connais ta date d\'anniversaire!');
+				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
 		}else if(interaction.commandName === 'delanniv'){
 			await interaction.reply('Je suis censé supprimer ta date d\'anniversaire?');
