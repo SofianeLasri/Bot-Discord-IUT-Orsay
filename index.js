@@ -315,9 +315,12 @@ async function checkAnniv() {
 		if(memberFetch){
 			console.log(" 🎂 "+memberFetch.username);
 			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
-				let annivRole=memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
-				memberFetch.roles.add(annivRole);
-				console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.username.brightBlue);
+				let annivRole= await memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
+				if(annivRole){
+					memberFetch.roles.add(annivRole);
+					console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.username.brightBlue);
+				}
+				
 			}
 		}
 		
