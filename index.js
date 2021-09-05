@@ -227,7 +227,12 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.commandName === 'ping') {
 			await interaction.reply('Pong!');
 		}else if(interaction.commandName === 'setanniv'){
-			let userAnniv = await memberSettings.findOne({where: {memberId: interaction.user.id name: "birthday"}});
+			let userAnniv = await memberSettings.findOne({
+				where: {
+					memberId: interaction.user.id
+					name: "birthday"
+				}
+			});
 			if(userAnniv == null){
 				await interaction.reply('Je ne connais pas ta date d\'anniversaire.');
 			}else{
