@@ -240,13 +240,17 @@ client.on('interactionCreate', async interaction => {
 				}
 			});
 			if(userAnniv == null){
+				let memberBirthday = Date.parse(interaction.options.getString('date'));
+				console.log(memberBirthday);
+				await interaction.reply(memberBirthday);
+				/*
 				try{
-					let memberBirthday = Date.parse(interaction.options.getString('date'));
-					await interaction.reply('Je m\'en souviendrai. :wink:');
+					
 				} catch (error) {
 					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
 					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date')+'\n'+error);
 				}
+				*/
 			}else{
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
