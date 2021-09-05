@@ -301,7 +301,7 @@ async function checkAnniv() {
 		where: {
 			name: "birthday",
 			value:  {
-				[Op.like]: today+'%'
+				[Sequelize.like]: today+'%'
 			  }
 		},
 		offset: 10,
