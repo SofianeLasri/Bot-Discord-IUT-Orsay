@@ -301,7 +301,7 @@ async function checkAnniv() {
 		where: {
 			name: "birthday",
 			value:  {
-				[Op.like]: today.'%'
+				[Op.like]: today+'%'
 			  }
 		},
 		offset: 10,
