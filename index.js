@@ -312,14 +312,14 @@ async function checkAnniv() {
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	for await (const member of rows){
 		const guild = client.guilds.cache.get(config.get("GUILD_ID"));
-		let memberFetch = await guild.members.fetch(member.memberId.toString());
+		let memberFetch = guild.members.fetch(member.memberId.toString());
 		if(memberFetch){	
-			console.log(" 🎂 "+memberFetch.username);
+			console.log(" 🎂 "+memberFetch.nickname);
 			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
 				let annivRole= await memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
 				if(annivRole){
 					memberFetch.roles.add(annivRole);
-					console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.username.brightBlue);
+					console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.nickname.brightBlue);
 				}
 				
 			}
