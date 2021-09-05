@@ -246,6 +246,7 @@ client.on('interactionCreate', async interaction => {
 					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
 				}else{
 					try {
+						memberBirthday = new Date(memberBirthday);
 						console.log('['+'INSERT'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+" a renseigné sa date d'anniversaire. ".brightWhite+interaction.options.getString('date').yellow);
 						var dd = memberBirthday.getDate();
 						var mm = memberBirthday.getMonth() + 1;
