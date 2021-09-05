@@ -53,7 +53,7 @@ const commands = [{
 	description: 'Permet de définir ta date d\'anniversaire (usage unique).',
 	options: [{
 		name: "date", // no uppercase as well
-		description: "Date au format DD/MM/YYYY - 11/12/2001",
+		description: "Date au format MM/DD/YYYY - 12/31/2001 - c'est relou je sais",
 		type: 3,
 		required: true
 	}]
@@ -234,19 +234,23 @@ client.on('interactionCreate', async interaction => {
 		if (interaction.commandName === 'ping') {
 			await interaction.reply('Pong!');
 		}else if(interaction.commandName === 'setanniv'){
+			// Je check si le membre a déjà enregistré sa date d'anniversaire
 			let userAnniv = await memberSettings.findOne({
 				where: {
 					memberId: interaction.user.id,
 					name: 'birthday'
 				}
 			});
+			// S'il ne l'a pas déjà fait
 			if(userAnniv == null){
+				// On va checker que ce qu'il a envoyé est bien une date valide
 				let memberBirthday = Date.parse(interaction.options.getString('date'));
 				if(isNaN(memberBirthday)){
 					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date'));
-					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
+					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **MM/DD/YYYY**? :thinking:');
 				}else{
 					try {
+						// A savoir que new Date utilise le format US -> il va comprendre MM/DD/YYYY
 						memberBirthday = new Date(memberBirthday);
 						console.log('['+'INSERT'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+" a renseigné sa date d'anniversaire. ".brightWhite+interaction.options.getString('date').yellow);
 						var dd = memberBirthday.getDate();
@@ -259,7 +263,7 @@ client.on('interactionCreate', async interaction => {
 						if (mm < 10) {
 							mm = '0' + mm;
 						}
-						let birthday = dd + '/' + mm + '/' + yyyy; Il inverse les jours et les mois
+						let birthday = mm + '/' + dd + '/' + yyyy;
 						let insetMemberBirthday = memberSettings.create({
 							memberId: interaction.user.id,
 							name: "birthday",
@@ -311,7 +315,9 @@ async function checkAnniv() {
 		if(memberFetch){
 			console.log(" 🎂 "+memberFetch.username);
 			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
-
+				let annivRole=memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
+				memberFetch.roles.add(annivRole);
+				console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.username.brightBlue);
 			}
 		}
 		
