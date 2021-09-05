@@ -245,7 +245,29 @@ client.on('interactionCreate', async interaction => {
 					console.log('\n'+'['+'ERREUR'.brightRed+"] Date illisible: "+interaction.options.getString('date'));
 					await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **DD/MM/YYYY**? :thinking:');
 				}else{
-					await interaction.reply('Je m\'en souviendrai. :wink:');
+					try {
+						console.log('['+'INSERT'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+" a renseigné sa date d'anniversaire. ".brightWhite+interaction.options.getString('date').yellow);
+						var dd = memberBirthday.getDate();
+						var mm = memberBirthday.getMonth() + 1;
+				
+						var yyyy = memberBirthday.getFullYear();
+						if (dd < 10) {
+							dd = '0' + dd;
+						}
+						if (mm < 10) {
+							mm = '0' + mm;
+						}
+						let birthday = dd + '/' + mm + '/' + yyyy;
+						let insetMemberBirthday = memberSettings.create({
+							memberId: interaction.user.id,
+							name: "birthday",
+							value: birthday
+						});
+						await interaction.reply('Je m\'en souviendrai. :wink:');
+					} catch (error) {
+						console.error('['+'ERREUR'.brightRed+'] Erreur lors de l\'insertion de la date d\'anniversaire: '.brightWhite+'\n', error);
+						await interaction.reply("J'ai eu un petit problème pour enregistrer ta date d'anniversaire, re-essaie plus-tard. :p");
+					}
 				}
 			}else{
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
