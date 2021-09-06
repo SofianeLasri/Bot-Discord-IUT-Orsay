@@ -292,7 +292,7 @@ client.on('interactionCreate', async interaction => {
 				await memberSettings.destroy({
 					where: {
 						name: "birthday",
-						memberId: interaction.options.getMember('membre').toString()
+						memberId: interaction.options.getMember('membre')
 					}
 				});
 			} catch (error){
