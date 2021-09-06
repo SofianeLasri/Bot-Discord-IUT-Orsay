@@ -305,7 +305,7 @@ client.on('interactionCreate', async interaction => {
 				
 				await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+'> a été supprimée.');
 			} else {
-				await interaction.replay("Tu n'as pas le droit d'exécuter cette commande.");
+				await interaction.reply("Tu n'as pas le droit d'exécuter cette commande.");
 			}
 			
 		}
