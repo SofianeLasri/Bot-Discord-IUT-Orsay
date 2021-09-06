@@ -326,9 +326,8 @@ async function checkAnniv() {
 			}
 		}
 		if(!isMemberBirthday){
-			console.log(memberWithAnnivRole);
 			console.log('['+'INFO'.yellow+'] Suppression du rôle anniversaire pour '.brightWhite+memberWithAnnivRole[1].user.username);
-			membersWithAnnivRole.roles.remove(config.get("ROLE_ANNIV")).catch(console.error);
+			memberWithAnnivRole[1].roles.remove(config.get("ROLE_ANNIV")).catch(console.error);
 		}
 	}
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
