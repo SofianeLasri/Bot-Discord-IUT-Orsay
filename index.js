@@ -237,7 +237,7 @@ client.on("ready", async function () {
   checkAnniv();
 });
 
-
+// Commandes
 client.on('interactionCreate', async interaction => {
 	if (interaction.isCommand()){
 		console.log('['+'COMMANDE'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+' a lancé la commande '.brightWhite+interaction.commandName.yellow);
@@ -290,6 +290,7 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
 		}else if(interaction.commandName === 'delanniv'){
+			// On check les perms
 			if(interaction.member.roles.cache.has(config.get("ROLE_ANNIV")) || interaction.member.id == config.get("ID_SOFIANE")){
 				try {
 					console.log('\n'+'['+'DELETE'.brightMagenta+"] Suppression de la date d'anniversaire de "+interaction.options.getMember('membre'));
@@ -345,6 +346,8 @@ async function checkAnniv() {
 	
 	var membersWithAnnivRole = await guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
 	//console.log(membersWithAnnivRole);
+
+	// On va vérifier que c'est bien l'anniv des membres ayant le rôle. :p
 	for await (var memberWithAnnivRole of membersWithAnnivRole){
 		
 		var isMemberBirthday = false;
