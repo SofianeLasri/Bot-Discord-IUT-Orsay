@@ -311,12 +311,14 @@ async function checkAnniv() {
 			  }
 		}
 	});
+
+	const guild = client.guilds.cache.get(config.get("GUILD_ID"));
+	//console.log(guild);
+	
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	for await (const member of rows){
-		const guild = client.guilds.cache.get(config.get("GUILD_ID"));
-		console.log(guild);
 		let memberFetch = await guild.members.fetch(member.memberId.toString());
-		console.log(memberFetch);
+		//console.log(memberFetch);
 		if(memberFetch){	
 			console.log(" 🎂 "+memberFetch.user.username);
 			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
@@ -332,6 +334,10 @@ async function checkAnniv() {
 		}
 		
 	}
+
+	let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
+	console.log(membersWithAnnivRole);
+
 }
 
 setInterval(checkAnniv, 5000);
