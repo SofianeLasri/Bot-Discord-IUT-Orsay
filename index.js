@@ -18,7 +18,7 @@ const { Routes } = require('discord-api-types/v9');
 const sequelize = new Sequelize(config.get("BDD_NAME"), config.get("BDD_USER"), config.get("BDD_PASSWORD"), {
 	host: config.get("BDD_HOST"),
 	dialect: 'mariadb',
-	logging: true,
+	logging: false,
 });
 
 // Paramètres du bot
@@ -287,20 +287,25 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
 		}else if(interaction.commandName === 'delanniv'){
-			try {
-				console.log('\n'+'['+'DELETE'.brightMagenta+"] Suppression de la date d'anniversaire de "+interaction.options.getMember('membre'));
-				await memberSettings.destroy({
-					where: {
-						name: "birthday",
-						memberId: interaction.options.getMember('membre').id
-					}
-				});
-			} catch (error){
-				console.error('['+'ERREUR'.brightRed+'] Erreur lors de la supression de la date d\'anniversaire: '.brightWhite+'\n', error);
-				await interaction.reply("J'ai eu un petit problème pour supprimer la date d'anniversaire, re-essaie plus-tard. :p");
+			if(interaction.member.roles.cache.has(config.get("ROLE_ANNIV")) || interaction.member.id == config.get("ID_SOFIANE")){
+				try {
+					console.log('\n'+'['+'DELETE'.brightMagenta+"] Suppression de la date d'anniversaire de "+interaction.options.getMember('membre'));
+					await memberSettings.destroy({
+						where: {
+							name: "birthday",
+							memberId: interaction.options.getMember('membre').id
+						}
+					});
+				} catch (error){
+					console.error('['+'ERREUR'.brightRed+'] Erreur lors de la supression de la date d\'anniversaire: '.brightWhite+'\n', error);
+					await interaction.reply("J'ai eu un petit problème pour supprimer la date d'anniversaire, re-essaie plus-tard. :p");
+				}
+				
+				await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+'> a été supprimée.');
+			} else {
+				await interaction.replay("Tu n'as pas le droit d'exécuter cette commande.");
 			}
 			
-			await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+'> a été supprimée.');
 		}
 	}	
 });
