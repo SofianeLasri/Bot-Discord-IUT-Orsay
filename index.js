@@ -334,7 +334,7 @@ async function checkAnniv() {
 	}
 }
 
-// setInterval(checkAnniv, 1500);
+setInterval(checkAnniv, 1500);
 
 // login to Discord with your app's token
 client.login(config.get("DISCORD_BOT_TOKEN"));
