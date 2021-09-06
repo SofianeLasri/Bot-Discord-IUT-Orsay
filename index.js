@@ -57,7 +57,13 @@ const commands = [{
 },
 {
 	name: 'delanniv',
-	description: '[Admin] Supprime la date d\'anniversaire d\'un membre.'
+	description: '[Admin] Supprime la date d\'anniversaire d\'un membre.',
+	options: [{
+		name: "membre", // no uppercase as well
+		description: "Membre à supprimer la date d'anniversaire.",
+		type: 6,
+		required: true
+	}]
 }];
 
 ////////////////////////////////////////////////////////////////
@@ -281,6 +287,8 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
 		}else if(interaction.commandName === 'delanniv'){
+			console.log('\n'+'['+'INFO'.yellow+"] Membre à supprimer la date d'anniv: "+interaction.options.getMember('membre'));
+			//await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **MM/DD/YYYY**? :thinking:');
 			await interaction.reply('Je suis censé supprimer ta date d\'anniversaire?');
 		}
 	}	
@@ -316,7 +324,7 @@ async function checkAnniv() {
 	//console.log(guild);
 	
 	var membersWithAnnivRole = await guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
-	console.log(membersWithAnnivRole);
+	//console.log(membersWithAnnivRole);
 	for await (var memberWithAnnivRole of membersWithAnnivRole){
 		
 		var isMemberBirthday = false;
