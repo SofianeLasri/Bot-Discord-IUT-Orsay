@@ -315,7 +315,7 @@ async function checkAnniv() {
 	const guild = client.guilds.cache.get(config.get("GUILD_ID"));
 	//console.log(guild);
 	
-	let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
+	/*let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
 	for await (var member of membersWithAnnivRole){
 		var isMemberBirthday = false
 		for await (const member of rows){
@@ -327,7 +327,7 @@ async function checkAnniv() {
 			member.roles.remove(config.get("ROLE_ANNIV")).catch(console.error);
 		}
 	}
-	
+	 */
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	
 	for await (var member of rows){
