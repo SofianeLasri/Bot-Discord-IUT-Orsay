@@ -4,7 +4,7 @@ Ce bot a été conçu dans l'optique de servir de liaison entre le forum https:/
 # Installation
 Le bot nécessite un fichier.env contenant les informations de connexion à la base de donnée.
 Voici le modèle:
-
+```env
 DISCORD_BOT_TOKEN=
 CLIENT_ID=
 GUILD_ID=
@@ -15,3 +15,4 @@ BDD_PASSWORD=
 ROLE_ANNIV=
 ROLE_ADMIN=
 ID_SOFIANE=
+```
