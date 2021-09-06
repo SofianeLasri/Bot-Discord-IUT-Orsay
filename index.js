@@ -287,9 +287,20 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
 		}else if(interaction.commandName === 'delanniv'){
-			console.log('\n'+'['+'INFO'.yellow+"] Membre à supprimer la date d'anniv: "+interaction.options.getMember('membre'));
-			//await interaction.reply('J\'ai du mal à lire la date que tu m\'as donné. Est-elle bien dans ce format **MM/DD/YYYY**? :thinking:');
-			await interaction.reply('Je suis censé supprimer ta date d\'anniversaire?');
+			try {
+				console.log('\n'+'['+'DELETE'.brightMagenta+"] Suppression de la date d'anniversaire de "+interaction.options.getMember('membre'));
+				await memberSettings.destroy({
+					where: {
+						name: "birthday",
+						memberId: interaction.options.getMember('membre')
+					}
+				});
+			} catch (error){
+				console.error('['+'ERREUR'.brightRed+'] Erreur lors de la supression de la date d\'anniversaire: '.brightWhite+'\n', error);
+				await interaction.reply("J'ai eu un petit problème pour supprimer la date d'anniversaire, re-essaie plus-tard. :p");
+			}
+			
+			await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+' a été supprimée.');
 		}
 	}	
 });
