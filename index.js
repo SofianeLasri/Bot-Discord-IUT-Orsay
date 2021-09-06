@@ -330,7 +330,7 @@ async function checkAnniv() {
 			member.roles.remove(config.get("ROLE_ANNIV")).catch(console.error);
 		}
 	}
-	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
+	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' persoSSSnne(s).');
 	
 	for await (var member of rows){
 		let memberFetch = await guild.members.fetch(member.memberId.toString());
