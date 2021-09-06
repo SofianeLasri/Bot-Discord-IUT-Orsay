@@ -233,6 +233,8 @@ client.on("ready", async function () {
   console.log("////////////////////".brightCyan);
   console.log("");
   console.log("Bot démarré".brightGreen);
+  
+  checkAnniv();
 });
 
 
