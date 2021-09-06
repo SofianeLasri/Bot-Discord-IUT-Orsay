@@ -280,6 +280,7 @@ client.on('interactionCreate', async interaction => {
 							value: birthday
 						});
 						await interaction.reply('Je m\'en souviendrai. :wink:');
+						checkAnniv();
 					} catch (error) {
 						console.error('['+'ERREUR'.brightRed+'] Erreur lors de l\'insertion de la date d\'anniversaire: '.brightWhite+'\n', error);
 						await interaction.reply("J'ai eu un petit problème pour enregistrer ta date d'anniversaire, re-essaie plus-tard. :p");
