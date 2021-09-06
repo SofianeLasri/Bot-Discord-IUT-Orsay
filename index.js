@@ -300,7 +300,7 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply("J'ai eu un petit problème pour supprimer la date d'anniversaire, re-essaie plus-tard. :p");
 			}
 			
-			await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+' a été supprimée.');
+			await interaction.reply('La date d\'anniversaire de <@'+interaction.options.getMember('membre')+'> a été supprimée.');
 		}
 	}	
 });
