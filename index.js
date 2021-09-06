@@ -316,16 +316,16 @@ async function checkAnniv() {
 	//console.log(guild);
 	
 	let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
-	for await (var member of membersWithAnnivRole){
+	for await (var memberWithAnnivRole of membersWithAnnivRole){
 		var isMemberBirthday = false;
 		for await (const member of rows){
-			if(member[0] === member.memberId.toString()){
+			if(memberWithAnnivRole[0] === member.memberId.toString()){
 				isMemberBirthday = true;
 			}
 		}
 		if(!isMemberBirthday){
-			let memberFetch = await guild.members.fetch(member.memberId.toString());
-			console.log('['+'INFO'.yellow+'] Suppression du rôle anniversaire pour '.brightWhite+memberFetch.user.username);
+			console.log(memberWithAnnivRole);
+			//console.log('['+'INFO'.yellow+'] Suppression du rôle anniversaire pour '.brightWhite+memberFetch.user.username);
 			member.roles.remove(config.get("ROLE_ANNIV")).catch(console.error);
 		}
 	}
