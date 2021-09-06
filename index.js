@@ -317,7 +317,7 @@ async function checkAnniv() {
 	
 	let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
 	for await (var member of membersWithAnnivRole){
-		var isMemberBirthday = false
+		var isMemberBirthday = false;
 		for await (const member of rows){
 			if(member[0] === member.memberId.toString()){
 				isMemberBirthday = true;
