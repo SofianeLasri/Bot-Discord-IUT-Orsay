@@ -331,24 +331,21 @@ async function checkAnniv() {
 	console.log('['+'SUCCES'.brightGreen+'] C\'est l\'anniversaire de '+count+' personne(s).');
 	
 	for await (var member of rows){
-		if(isMemberBirthday){
-			let memberFetch = await guild.members.fetch(member.memberId.toString());
-			//console.log(memberFetch);
-			if(memberFetch){	
-				console.log(" 🎂 "+memberFetch.user.username);
-				if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
-					let annivRole= await memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
-					if(annivRole){
-						memberFetch.roles.add(annivRole);
-						console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.user.username.brightBlue);
-	
-						// JE SUIS ICI, CETTE FONCTION NE FONCTONNE PAS
-					}
-					
+		let memberFetch = await guild.members.fetch(member.memberId.toString());
+		//console.log(memberFetch);
+		if(memberFetch){	
+			console.log(" 🎂 "+memberFetch.user.username);
+			if(!memberFetch.roles.cache.has(config.get("ROLE_ANNIV"))){
+				let annivRole= await memberFetch.guild.roles.cache.find(role => role.id === config.get("ROLE_ANNIV"));
+				if(annivRole){
+					memberFetch.roles.add(annivRole);
+					console.log('['+'INFO'.yellow+'] Le rôle '.brightWhite + annivRole.name.yellow + "a été donné à " + memberFetch.user.username.brightBlue);
+
+					// JE SUIS ICI, CETTE FONCTION NE FONCTONNE PAS
 				}
+				
 			}
 		}
-		
 	}
 
 }
