@@ -336,7 +336,9 @@ async function checkAnniv() {
 	}
 
 	let membersWithAnnivRole = guild.roles.cache.get(config.get("ROLE_ANNIV")).members;
-	console.log(membersWithAnnivRole);
+	for await (const member of membersWithAnnivRole){
+		console.log(member.user.id);
+	}
 
 }
 
