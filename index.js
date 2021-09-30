@@ -114,6 +114,7 @@ async function initialiseDatabaseTables(){
 	try{
 		await botSettings.sync();
 		await memberSettings.sync();
+		await discordMessages.sync();
 
 		// Basiquement on regarde si l'entrée existe, puis on agit en conséquence
 		let token = await botSettings.findOne({where: {name: "token" }});
