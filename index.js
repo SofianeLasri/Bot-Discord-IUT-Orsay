@@ -39,7 +39,7 @@ const memberSettings = sequelize.define('bot_memberSettings', {
 });
 
 // Messages envoyés (pour les logs) (seront supprimés de la bdd après 30j, archivés quelques part sur mon serveur)
-const discordMessages = sequelize.define('fpfr_messages', {
+const discordMessages = sequelize.define('bot_messages', {
 	messageId: { type: Sequelize.BIGINT(255), primaryKey: true },
 	channelId: Sequelize.BIGINT(255),
 	memberId: Sequelize.BIGINT(255),
