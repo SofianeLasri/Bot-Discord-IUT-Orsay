@@ -38,6 +38,17 @@ const memberSettings = sequelize.define('bot_memberSettings', {
 	timestamps: false
 });
 
+// Messages envoyés (pour les logs) (seront supprimés de la bdd après 30j, archivés quelques part sur mon serveur)
+const discordMessages = sequelize.define('fpfr_messages', {
+	messageId: { type: Sequelize.BIGINT(255), primaryKey: true },
+	channelId: Sequelize.BIGINT(255),
+	memberId: Sequelize.BIGINT(255),
+	content: Sequelize.TEXT,
+	date: Sequelize.DATE,
+}, {
+	timestamps: false
+});
+
 
 ////////////////////////////////////////////////////////////////
 
@@ -383,7 +394,29 @@ async function checkAnniv() {
 
 }
 
+
 setInterval(checkAnniv, 21600000); // 6H
+
+client.on('messageCreate', async message => {
+	let messageDetails = {
+		text: message.content,
+		attachments: JSON.stringify(message.attachments),
+	};
+	let currentdate = new Date(message.createdTimestamp);
+	let datetime = currentdate.getFullYear() + "-"
+						+ (currentdate.getMonth()+1)	+ "-" 
+						+ currentdate.getDate() + " "	
+						+ (currentdate.getHours()+1) + ":"	
+						+ currentdate.getMinutes() + ":" 
+						+ currentdate.getSeconds();
+	await discordMessages.create({
+		messageId: message.id,
+		channelId: message.channel.id,
+		memberId: message.author.id,
+		content: JSON.stringify(messageDetails),
+		date: datetime,
+	});
+});
 
 // login to Discord with your app's token
 client.login(config.get("DISCORD_BOT_TOKEN"));
