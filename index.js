@@ -404,12 +404,14 @@ client.on('messageCreate', async message => {
 		attachments: JSON.stringify(message.attachments),
 	};
 	let currentdate = new Date(message.createdTimestamp);
+	/*
 	let datetime = currentdate.getFullYear() + "-"
 						+ (currentdate.getMonth()+1)	+ "-" 
 						+ currentdate.getDate() + " "	
 						+ (currentdate.getHours()+1) + ":"	
 						+ currentdate.getMinutes() + ":" 
-						+ currentdate.getSeconds();
+						+ currentdate.getSeconds();*/
+	let datetime = currentdate.format("yyy-/MM-dd hh:mm:ss");
 	console.log(datetime);
 	await discordMessages.create({
 		messageId: message.id,
