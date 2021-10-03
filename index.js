@@ -410,6 +410,7 @@ client.on('messageCreate', async message => {
 						+ (currentdate.getHours()+1) + ":"	
 						+ currentdate.getMinutes() + ":" 
 						+ currentdate.getSeconds();
+	console.log(datetime);
 	await discordMessages.create({
 		messageId: message.id,
 		channelId: message.channel.id,
