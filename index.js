@@ -10,6 +10,9 @@ var colors = require('colors');
 const { REST } = require('@discordjs/rest');
 const { Routes } = require('discord-api-types/v9');
 
+// Moment JS
+var moment = require('moment');  
+
 ////////////////////////////////////////////////////////////////
 // MODELES DES TABLES
 ////////////////////////////////////////////////////////////////
