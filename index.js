@@ -414,7 +414,7 @@ client.on('messageCreate', async message => {
 						+ (currentdate.getHours()+1) + ":"	
 						+ currentdate.getMinutes() + ":" 
 						+ currentdate.getSeconds();*/
-	let datetime = moment(message.createdTimestamp, "yyy-MM-dd hh:mm:ss");
+	let datetime = moment.unix(message.createdTimestamp).format("yyy-MM-dd hh:mm:ss");
 	console.log(datetime);
 	await discordMessages.create({
 		messageId: message.id,
