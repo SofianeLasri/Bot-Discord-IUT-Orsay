@@ -78,6 +78,96 @@ const commands = [{
 		type: 6,
 		required: true
 	}]
+},
+{
+	name: 'play',
+	description: 'Permet de jouer une musique.',
+	options: [{
+		name: "titre", // no uppercase as well
+		description: "Titre de la vidéo sur YouTube",
+		type: 3,
+		required: true
+	}]
+},
+{
+	name: 'playlist',
+	description: 'Permet de jouer une playliste.',
+	options: [{
+		name: "titre", // no uppercase as well
+		description: "Titre de la playlist sur YouTube",
+		type: 3,
+		required: true
+	}]
+},
+{
+	name: 'skip',
+	description: 'Passe à la musique suivante'
+},
+{
+	name: 'stop',
+	description: 'Stoppe la musique'
+},
+{
+	name: 'remove-loop',
+	description: 'Supprimer la boucle'
+},
+{
+	name: 'toggle-loop',
+	description: 'Activer la boucle'
+},
+{
+	name: 'toggle-queue-loop',
+	description: 'Activer la boucle de la liste'
+},
+{
+	name: 'set-volume',
+	description: 'Permet de régler le volume.',
+	options: [{
+		name: "volume", // no uppercase as well
+		description: "Volume en %.",
+		type: 4,
+		required: true
+	}]
+},
+{
+	name: 'seek',
+	description: 'Prrr pas encore testé x)'
+},
+{
+	name: 'clear-queue',
+	description: 'Vide la file de lecture'
+},
+{
+	name: 'shuffle',
+	description: 'Ca fait penser à waffle'
+},
+{
+	name: 'get-queue',
+	description: 'Permet de voir la file d\'attente.'
+},
+{
+	name: 'get-volume',
+	description: 'Permet de voir le niveau de volume.'
+},
+{
+	name: 'now-playing',
+	description: 'Permet de voir la musique actuelle.'
+},
+{
+	name: 'pause',
+	description: 'Met la musique en pause.'
+},
+{
+	name: 'resume',
+	description: 'Reprend la musique'
+},
+{
+	name: 'remove',
+	description: 'Supprime la musique actuelle (pas de tout internet, malheuresement)'
+},
+{
+	name: 'create-progress-bar',
+	description: 'Permet de créer une barre de progression (pour la musique)'
 }];
 
 ////////////////////////////////////////////////////////////////
@@ -242,6 +332,49 @@ const { Client, Intents, MessageActionRow, MessageButton } = require('discord.js
 // create a new Discord client
 const client = new Client({ intents: ["GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES"] });
 
+////////////////////////////////////////////////////////////////
+// Partie musique
+
+const { Player } = require("discord-music-player");
+const player = new Player(client, {
+    leaveOnEmpty: false, // This options are optional.
+});
+// You can define the Player as *client.player* to easly access it.
+client.player = player;
+
+// Init the event listener only once (at the top of your code).
+client.player
+    // Emitted when channel was empty.
+    .on('channelEmpty',  (queue) =>
+        console.log(`Everyone left the Voice Channel, queue ended.`))
+    // Emitted when a song was added to the queue.
+    .on('songAdd',  (queue, song) =>
+        console.log(`Song ${song} was added to the queue.`))
+    // Emitted when a playlist was added to the queue.
+    .on('playlistAdd',  (queue, playlist) =>
+        console.log(`Playlist ${playlist} with ${playlist.songs.length} was added to the queue.`))
+    // Emitted when there was no more music to play.
+    .on('queueEnd',  (queue) =>
+        console.log(`The queue has ended.`))
+    // Emitted when a song changed.
+    .on('songChanged', (queue, newSong, oldSong) =>
+        console.log(`${newSong} is now playing.`))
+    // Emitted when a first song in the queue started playing.
+    .on('songFirst',  (queue, song) =>
+        console.log(`Started playing ${song}.`))
+    // Emitted when someone disconnected the bot from the channel.
+    .on('clientDisconnect', (queue) =>
+        console.log(`I was kicked from the Voice Channel, queue ended.`))
+    // Emitted when deafenOnJoin is true and the bot was undeafened
+    .on('clientUndeafen', (queue) =>
+        console.log(`I got undefeanded.`))
+    // Emitted when there was an error in runtime
+    .on('error', (error, queue) => {
+        console.log(`Error: ${error} in ${queue.guild.name}`);
+    });
+
+////////////////////////////////////////////////////////////////
+
 client.on("ready", async function () {
 	console.log('\n'+"/////////////////////".brightCyan);
   console.log("// Larbin de l'IUT //".brightCyan);
@@ -258,7 +391,9 @@ client.on('interactionCreate', async interaction => {
 		console.log('['+'COMMANDE'.brightMagenta+'] '.brightWhite+interaction.user.username.brightBlue+' a lancé la commande '.brightWhite+interaction.commandName.yellow);
 		if (interaction.commandName === 'ping') {
 			await interaction.reply('Pong!');
-		}else if(interaction.commandName === 'setanniv'){
+		}
+
+		if(interaction.commandName === 'setanniv'){
 			// Je check si le membre a déjà enregistré sa date d'anniversaire
 			let userAnniv = await memberSettings.findOne({
 				where: {
@@ -304,7 +439,9 @@ client.on('interactionCreate', async interaction => {
 			}else{
 				await interaction.reply('Tu ne peux pas redéfinir ta date d\'anniversaire. Demande au staff si besoin. :p');
 			}
-		}else if(interaction.commandName === 'delanniv'){
+		}
+
+		if(interaction.commandName === 'delanniv'){
 			// On check les perms
 			if(interaction.member.roles.cache.has(config.get("ROLE_ANNIV")) || interaction.member.id == config.get("ID_SOFIANE")){
 				try {
@@ -326,6 +463,108 @@ client.on('interactionCreate', async interaction => {
 				await interaction.reply("Tu n'as pas le droit d'exécuter cette commande.");
 			}
 			
+		}
+
+		// Commandes pour le bot de musique
+		let guildQueue = client.player.getQueue(interaction.guild.id);
+
+		if (interaction.commandName === 'play') {
+			await interaction.reply('Attend j\'appelle Jacqueline de la compta');
+			let queue = client.player.createQueue(interaction.guild.id);
+			await queue.join(interaction.member.voice.channel);
+			let song = await queue.play( interaction.options.getString('titre') ).catch(async _ => {
+				if(!guildQueue){
+					queue.stop();
+				}
+			});
+			await interaction.editReply("Lecture de **"+song+"**");
+		}
+
+		if (interaction.commandName === 'playlist') {
+			let queue = client.player.createQueue(interaction.guild.id);
+			await queue.join(interaction.member.voice.channel);
+			let song = await queue.playlist( interaction.options.getString('titre') ).catch(_ => {
+				if(!guildQueue)
+					queue.stop();
+			});
+		}
+
+		if (interaction.commandName === 'skip') {
+			await interaction.reply('Musique skippée.');
+			guildQueue.skip();
+		}
+
+		if (interaction.commandName === 'stop') {
+			await interaction.reply('Musique arrêtée.');
+			guildQueue.stop();
+		}
+
+		if (interaction.commandName === 'remove-loop') {
+			await interaction.reply('Arrêt de la lecture en boucle.');
+			guildQueue.setRepeatMode(RepeatMode.DISABLED); // or 0 instead of RepeatMode.DISABLED
+		}
+
+		if (interaction.commandName === 'toggle-loop') {
+			await interaction.reply('Lecture en boucle '+RepeatMode.SONG);
+			guildQueue.setRepeatMode(RepeatMode.SONG); // or 1 instead of RepeatMode.SONG
+		}
+
+		if (interaction.commandName === 'toggle-queue-loop') {
+			await interaction.reply('Lecture en boucle de la file d\'attente: '+RepeatMode.QUEUE);
+			guildQueue.setRepeatMode(RepeatMode.QUEUE); // or 2 instead of RepeatMode.QUEUE
+		}
+
+		if (interaction.commandName === 'setVolume') {
+			await interaction.reply('Le volume a été réglé à '+interaction.options.getInteger('volume')+"%");
+			guildQueue.setVolume(interaction.options.getInteger('volume'));
+		}
+
+		if (interaction.commandName === 'seek') {
+			guildQueue.seek(parseInt(args[0]) * 1000);
+		}
+
+		if (interaction.commandName === 'clear-queue') {
+			await interaction.reply('La liste de lecture a été vidée.');
+			guildQueue.clearQueue();
+		}
+
+		if (interaction.commandName === 'shuffle') {
+			await interaction.reply('La liste de lecture a été mélangée.');
+			guildQueue.shuffle();
+		}
+
+		if (interaction.commandName === 'get-queue') {
+			await interaction.reply("File d'attente: "+guildQueue);
+		}
+
+		if (interaction.commandName === 'get-volume') {
+			await interaction.reply("Volume: "+guildQueue.volume+"%");
+		}
+
+		if (interaction.commandName === 'now-playing') {
+			await interaction.reply(`Lecture en cours: ${guildQueue.nowPlaying}`);
+		}
+
+		if (interaction.commandName === 'pause') {
+			await interaction.reply("La musique a été mise en pause.");
+			guildQueue.setPaused(true);
+		}
+
+		if (interaction.commandName === 'resume') {
+			await interaction.reply("Zéé repartiii!");
+			guildQueue.setPaused(false);
+		}
+
+		if (interaction.commandName === 'remove') {
+			await interaction.reply("La musique a été supprimée.");
+			guildQueue.remove(parseInt(args[0]));
+		}
+
+		if (interaction.commandName === 'create-progress-bar') {
+			const ProgressBar = guildQueue.createProgressBar();
+			
+			// [======>              ][00:35/2:20]
+			await interaction.reply(ProgressBar.prettier);
 		}
 	}	
 });
